@@ -1,9 +1,9 @@
 ﻿// hybrid_ggpo.cpp : Defines the entry point for the application.
 //
 
-#include "hybrid_ggpo.h"
+#include "../headers/hybrid_ggpo.h"
 #include "ggponet.h"
-#include "./DALIL_DILER_GACON_ML_5A/Atlus/src/headers/core.h"
+#include "../DALIL_DILER_GACON_ML_5A/Atlus/src/headers/core.h"
 
 using namespace std;
 
