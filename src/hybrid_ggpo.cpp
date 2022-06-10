@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int main()
+void test()
 {
 	cout << "Hello CMake." << endl;
     uint test[2] = {1,1};
@@ -17,5 +17,4 @@ int main()
 
     ggpo_advance_frame((GGPOSession*)(void*)0);
     cout << "ended process" << endl;
-	return 0;
 }

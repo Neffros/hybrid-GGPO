@@ -18,7 +18,9 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         add_subdirectory(ggpo)
 
         #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
-        add_executable(hybrid_ggpo "src/hybrid_ggpo.cpp" "headers/hybrid_ggpo.h" headers/strategy/IInputPredictionStrategy.h headers/strategy/AHybridInputPredictionStrategy.h "headers/strategy/ARandomInputPredictionStrategy .h")
+        add_library(hybrid_ggpo "src/hybrid_ggpo.cpp" "headers/hybrid_ggpo.h" headers/strategy/IInputPredictionStrategy.h headers/strategy/AHybridInputPredictionStrategy.h "headers/strategy/ARandomInputPredictionStrategy .h")
+
+        #add_executable(hybrid_ggpo "src/hybrid_ggpo.cpp" "headers/hybrid_ggpo.h" headers/strategy/IInputPredictionStrategy.h headers/strategy/AHybridInputPredictionStrategy.h "headers/strategy/ARandomInputPredictionStrategy .h")
         target_link_libraries(hybrid_ggpo Atlus)
         target_link_libraries(hybrid_ggpo GGPO)
 
