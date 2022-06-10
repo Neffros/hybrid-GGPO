@@ -1,0 +1,6 @@
+[submodule "ggpo"]
+	path = ggpo
+	url = https://github.com/Neffros/ggpo
+[submodule "DALIL_DILER_GACON_ML_5A"]
+	path = DALIL_DILER_GACON_ML_5A
+	url = https://github.com/samidalil/DALIL_DILER_GACON_ML_5A
