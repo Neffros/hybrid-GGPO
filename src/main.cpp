@@ -1,4 +1,4 @@
-#include "../hybridggpo.h"
+#include "include/hybridggpo.h"
 
 #include "headers/session/HybridP2PSession.h"
 

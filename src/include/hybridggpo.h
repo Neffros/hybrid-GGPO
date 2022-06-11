@@ -1,8 +1,8 @@
 #pragma once
 
-#include <ggponet.h>
+#include "ggponet.h"
 
-#include "src/headers/strategy/IInputPredictionStrategy.h"
+#include "strategy/IInputPredictionStrategy.h"
 
 GGPO_API GGPOErrorCode __cdecl ggpo_start_hybrid_session(
     GGPOSession** session,

@@ -7,9 +7,9 @@
 #include "ring_buffer.h"
 #include "network/udp_msg.h"
 
-#include "../strategy/IInputPredictionStrategy.h"
+#include "strategy/IInputPredictionStrategy.h"
 
-#define MAX_PREDICTION_FRAMES    20
+#define HYBRID_MAX_PREDICTION_FRAMES	20
 
 class SyncTestBackend;
 
@@ -71,7 +71,7 @@ namespace HybridGGPO
 			SavedFrame() : buf(NULL), cbuf(0), frame(-1), checksum(0) { }
 		};
 		struct SavedState {
-			SavedFrame frames[MAX_PREDICTION_FRAMES + 2];
+			SavedFrame frames[HYBRID_MAX_PREDICTION_FRAMES + 2];
 			int head;
 		};
 
