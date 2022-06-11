@@ -132,7 +132,7 @@ SyncWithPredictionStrategy::SynchronizeInputs(void* values, int size)
             ASSERT(state->buf && state->cbuf);
 
             // We use the given input prediction strategy
-            _inputPredictionStrategy->requestPrediction(_framecount, (char const*)state->buf, &input);
+            _inputPredictionStrategy->requestPrediction(_framecount, (char const*)state->buf, (void*)input.bits, input.size);
         }
         memcpy(output + (i * _config.input_size), input.bits, _config.input_size);
     }
