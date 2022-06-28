@@ -4,6 +4,14 @@
 class DSSample {
 private:
     std::vector<double> data;
+    template<class T>
+    void baseAdd(const T& value);
+
+    template<class T>
+    void baseAddCategorical(const T& value, const std::vector<T>& possibleValues);
+
+    template<class T>
+    void baseAddCategorical(const T& value, const T* possibleValues);
 public:
     void add(const int& value);
     void add(const float& value);
@@ -11,15 +19,25 @@ public:
     void add(const bool& value);
     void add(const long& value);
 
-    void addOneHot(const int& value, const std::vector<int>& possibleValues);
-    void addOneHot(const float& value, const std::vector<float>& possibleValues);
-    void addOneHot(const double& value, const std::vector<double>& possibleValues);
-    void addOneHot(const bool& value, const std::vector<bool>& possibleValues);
-    void addOneHot(const long& value, const std::vector<long>& possibleValues);
-    void addOneHot(const char& value, const std::vector<char>& possibleValues);
-    void addOneHot(const char* value, const std::vector<char*>& possibleValues);
+    void addCategorical(const int& value, const std::vector<int>& possibleValues);
+    void addCategorical(const int& value, const int* possibleValues);
+
+    void addCategorical(const float& value, const std::vector<float>& possibleValues);
+    void addCategorical(const float& value, const float* possibleValues);
+
+    void addCategorical(const double& value, const std::vector<double>& possibleValues);
+    void addCategorical(const double& value, const double* possibleValues);
+
+    void addCategorical(const bool& value, const std::vector<bool>& possibleValues);
+    void addCategorical(const bool& value, const bool* possibleValues);
+
+    void addCategorical(const long& value, const std::vector<long>& possibleValues);
+    void addCategorical(const long& value, const long* possibleValues);
+
+    void addCategorical(const char& value, const std::vector<char>& possibleValues);
+    void addCategorical(const char& value, const char* possibleValues);
 
     void reinitData();
 
-    std::vector<double> getData();
+    double* getData();
 };
