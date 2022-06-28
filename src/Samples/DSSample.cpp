@@ -98,3 +98,7 @@ void DSSample::addCategorical(const bool &value, const bool *possibleValues) {
 void DSSample::addCategorical(const long &value, const long *possibleValues) {
     this->baseAddCategorical(value, possibleValues);
 }
+
+void DSSample::addCategorical(const char &value, const char *possibleValues) {
+    this->baseAddCategorical(value, possibleValues);
+}
