@@ -1,37 +1,33 @@
 #include "../../headers/Samples/FSSample.h"
 
-FSSample::FSSample(const long SIZE): SIZE(SIZE) {
-    this->data = new double[SIZE];
+template<class T>
+FSSample::FSSample(const T size): _size(size) {
+    this->_data = new double[size];
 }
 
 template<class T>
 void FSSample::baseAdd(const T &value) {
-    this->data[this->index] = ((double) value);
-    ++this->index;
+    this->_data[this->_index] = ((double) value);
+    ++this->_index;
 }
 
 template<class T>
 void FSSample::baseAddCategorical(const T &value, const std::vector<T> &possibleValues) {
     for(auto it = possibleValues.begin(); it != possibleValues.end(); ++it)
     {
-        if(*it == value)
-            this->data[this->index] =(double) 1;
-        else
-            this->data[this->index] =(double) 0;
-        ++this->index;
+        this->_data[this->_index] = (value == *it? (double)1 : (double)2);
     }
+    this->_index += possibleValues.size();
 }
 
 template<class T>
-void FSSample::baseAddCategorical(const T &value, const T *possibleValues) {
-    for(auto i = 0; i < sizeof(possibleValues); ++i)
+void FSSample::baseAddCategorical(const T &value, const T *possibleValues, const size_t size) {
+    for(auto i = 0; i < size; ++i)
     {
-        if(possibleValues[i] == value)            
-            this->data[this->index] =(double) 1;
-        else
-            this->data[this->index] =(double) 0;
-        ++this->index;
+        this->_data[this->_index] = (value == possibleValues[i]? (double)1 : (double)2);
+
     }
+    this->_index += size;
 }
 
 void FSSample::add(const int &value) {
@@ -78,36 +74,35 @@ void FSSample::addCategorical(const char &value, const std::vector<char> &possib
     this->baseAddCategorical(value, possibleValues);
 }
 
-void FSSample::addCategorical(const int &value, const int *possibleValues) {
-    this->baseAddCategorical(value, possibleValues);
+void FSSample::addCategorical(const int &value, const int *possibleValues, const size_t size) {
+    this->baseAddCategorical(value, possibleValues, size);
 }
 
-void FSSample::addCategorical(const float &value, const float *possibleValues) {
-    this->baseAddCategorical(value, possibleValues);
+void FSSample::addCategorical(const float &value, const float *possibleValues, const size_t size) {
+    this->baseAddCategorical(value, possibleValues, size);
 }
 
-void FSSample::addCategorical(const double &value, const double *possibleValues) {
-    this->baseAddCategorical(value, possibleValues);
+void FSSample::addCategorical(const double &value, const double *possibleValues, const size_t size) {
+    this->baseAddCategorical(value, possibleValues, size);
 }
 
-void FSSample::addCategorical(const bool &value, const bool *possibleValues) {
-    this->baseAddCategorical(value, possibleValues);
+void FSSample::addCategorical(const bool &value, const bool *possibleValues, const size_t size) {
+    this->baseAddCategorical(value, possibleValues, size);
 }
 
-void FSSample::addCategorical(const long &value, const long *possibleValues) {
-    this->baseAddCategorical(value, possibleValues);
+void FSSample::addCategorical(const long &value, const long *possibleValues, const size_t size) {
+    this->baseAddCategorical(value, possibleValues, size);
 }
 
-void FSSample::addCategorical(const char &value, const char *possibleValues) {
-    this->baseAddCategorical(value, possibleValues);
+void FSSample::addCategorical(const char &value, const char *possibleValues, const size_t size) {
+    this->baseAddCategorical(value, possibleValues, size);
 }
 
 void FSSample::reinitData() {
-    std::fill_n(this->data, sizeof(this->data), 0);
-    this->index = 0;
+    this->_index = 0;
 }
 
-double *FSSample::getData() {
-    return this->data;
+void FSSample::getData(double (&array)[]) const {
+    std::copy(this->_data, this->_data + this->_size, array);
 }
 
