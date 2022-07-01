@@ -3,7 +3,7 @@
 #include "game_input.h"
 
 // Interface to create the base of a prediction strategy.
-struct IInputPredictionStrategy
+struct IInputPredictionStrategyService
 {
     // Called upon advancing a frame of the game
     virtual void onFrameAdvanced(int frame, char const* buffer, GameInput* input) = 0;

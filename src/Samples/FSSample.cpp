@@ -1,4 +1,4 @@
-#include "../../headers/Samples/FSSample.h"
+#include "../headers/Samples/FSSample.h"
 
 template<class T>
 FSSample::FSSample(const T size): _size(size) {

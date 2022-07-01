@@ -1,4 +1,4 @@
-#include "../../headers/Samples/DSSample.h"
+#include "../headers/Samples/DSSample.h"
 
 void DSSample::add(const int &value) {
     this->baseAdd(value);
