@@ -12,6 +12,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
+
         if(NOT GIT_SUBMOD_RESULT EQUAL "0")
             message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
         endif()
@@ -20,10 +21,20 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         add_subdirectory(DALIL_DILER_GACON_ML_5A/Atlus)
 
         add_library(HybridGGPO
-            "src/main.cpp"
-            "src/session/HybridP2PSession.cpp"
-            "src/synchronisation/HybridInputQueue.cpp"
-            "src/synchronisation/SyncWithPredictionStrategy.cpp"
+                "src/main.cpp" "hybrid_ggpo.h"
+                "src/headers/samples/DSSample.h" "src/Samples/DSSample.cpp"
+                "src/headers/samples/FSSample.h" "src/Samples/FSSample.cpp"
+                "src/headers/samples/DatasetSampleMapper.h"
+                "src/headers/mlp/MlpWrapper.h" "src/mlp/MlpWrapper.cpp"
+                "src/headers/strategy/IInputPredictionStrategyService.h"
+                "src/headers/strategy/ARandomInputPredictionStrategyService.h"
+                "src/headers/strategy/AHybridInputPredictionStrategyService.h"
+                "src/headers/GameStateService.h" "src/GameStateService.cpp"
+                "src/headers/HybridGGPOServiceProvider.h" "src/HybridGGPOServiceProvider.cpp"
+                "src/headers/synchronisation/HybridSync.h" "src/synchronisation/HybridSync.cpp"
+                "src/session/HybridP2PSession.cpp"
+                "src/synchronisation/HybridInputQueue.cpp"
+                "src/synchronisation/HybridSync.cpp"
         )
 
         target_link_libraries(HybridGGPO Atlus)

@@ -1,8 +1,8 @@
 #pragma once
-#include "IInputPredictionStrategy.h"
+#include "IInputPredictionStrategyService.h"
 
 // Main strategy which uses hybrid prediction
-class AHybridInputPredictionStrategy : public IInputPredictionStrategy
+class AHybridInputPredictionStrategy : public IInputPredictionStrategyService
 {
 
 public:

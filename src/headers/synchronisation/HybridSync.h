@@ -7,7 +7,7 @@
 #include "ring_buffer.h"
 #include "network/udp_msg.h"
 
-#include "../strategy/IInputPredictionStrategy.h"
+#include "../strategy/IInputPredictionStrategyService.h"
 #include "HybridInputQueue.h"
 
 #define MAX_PREDICTION_FRAMES    20
@@ -40,10 +40,10 @@ namespace HybridGGPO
 		};
 
 	public:
-		SyncWithPredictionStrategy(UdpMsg::connect_status* connect_status);
-		virtual ~SyncWithPredictionStrategy();
+		HybridSync(UdpMsg::connect_status* connect_status);
+		virtual ~HybridSync();
 
-		void Init(Config& config, IInputPredictionStrategy* inputPredictionStrategy);
+		void Init(Config& config, IInputPredictionStrategyService* inputPredictionStrategy);
 
 		void SetLastConfirmedFrame(int frame);
 		void SetFrameDelay(int queue, int delay);
@@ -95,8 +95,8 @@ namespace HybridGGPO
 		int            _framecount;
 		int            _max_prediction_frames;
 
-		HybridInputQueue*			_input_queues;
-		IInputPredictionStrategy*	_inputPredictionStrategy;
+		HybridInputQueue*					_input_queues;
+		IInputPredictionStrategyService*	_inputPredictionStrategy;
 
 		RingBuffer<Event, 32> _event_queue;
 		UdpMsg::connect_status* _local_connect_status;
