@@ -28,7 +28,7 @@ HybridP2PSession::HybridP2PSession(GGPOSessionCallbacks* cb,
     /*
      * Initialize the synchronization layer
      */
-    SyncWithPredictionStrategy::Config config = { 0 };
+    HybridSync::Config config = { 0 };
     config.num_players = num_players;
     config.input_size = input_size;
     config.callbacks = _callbacks;
@@ -341,7 +341,7 @@ HybridP2PSession::IncrementFrame(void)
 void
 HybridP2PSession::PollSyncEvents(void)
 {
-    SyncWithPredictionStrategy::Event e;
+    HybridSync::Event e;
     while (_sync.GetEvent(e)) {
         OnSyncEvent(e);
     }

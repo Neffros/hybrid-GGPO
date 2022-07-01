@@ -10,7 +10,7 @@ GGPOErrorCode ggpo_start_hybrid_session(
     int input_size,
     unsigned short localport,
     bool useHybridSession,
-    IInputPredictionStrategy* inputPredictionStrategy
+    IInputPredictionStrategyService* inputPredictionStrategy
 ) {
     if (!useHybridSession) {
         return ggpo_start_session(session, cb, game, num_players, input_size, localport);

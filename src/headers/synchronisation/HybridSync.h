@@ -20,7 +20,7 @@ namespace HybridGGPO
 	/// HybridGGPO authors' note:
 	/// Literally the Sync class from GGPO using prediction strategy when a player's input queue is predicting
 	/// </summary>
-	class SyncWithPredictionStrategy {
+	class HybridSync {
 	public:
 		struct Config {
 			GGPOSessionCallbacks    callbacks;
