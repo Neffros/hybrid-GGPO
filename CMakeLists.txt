@@ -22,6 +22,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         add_library(HybridGGPO
             "src/main.cpp"
             "src/session/HybridP2PSession.cpp"
+            "src/synchronisation/HybridInputQueue.cpp"
             "src/synchronisation/SyncWithPredictionStrategy.cpp"
         )
 

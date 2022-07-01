@@ -8,6 +8,7 @@
 #include "network/udp_msg.h"
 
 #include "../strategy/IInputPredictionStrategy.h"
+#include "HybridInputQueue.h"
 
 #define MAX_PREDICTION_FRAMES    20
 
@@ -15,10 +16,10 @@ class SyncTestBackend;
 
 namespace HybridGGPO
 {
-	/*
-	 * HybridGGPO authors' note:
-	 * Literally the Sync class from GGPO using prediction strategy when a player's input queue is predicting
-	 */
+	/// <summary>
+	/// HybridGGPO authors' note:
+	/// Literally the Sync class from GGPO using prediction strategy when a player's input queue is predicting
+	/// </summary>
 	class SyncWithPredictionStrategy {
 	public:
 		struct Config {
@@ -94,7 +95,7 @@ namespace HybridGGPO
 		int            _framecount;
 		int            _max_prediction_frames;
 
-		InputQueue*					_input_queues;
+		HybridInputQueue*			_input_queues;
 		IInputPredictionStrategy*	_inputPredictionStrategy;
 
 		RingBuffer<Event, 32> _event_queue;
