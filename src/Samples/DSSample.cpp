@@ -93,7 +93,10 @@ void DSSample::addCategorical(const char &value, const char *possibleValues, con
     this->baseAddCategorical(value, possibleValues, size);
 }
 
-void DSSample::getData(double* array) const {
-    std::copy(this->_data.begin(), this->_data.end(), array);
+void DSSample::getData(double* array, size_t& size) const {
+    auto dataBegin = this->_data.begin();
+    auto dataEnd = this->_data.end();
+    size = dataEnd - dataBegin;
+    std::copy(dataBegin, dataEnd, array);
 }
 
