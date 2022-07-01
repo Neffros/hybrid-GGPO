@@ -11,4 +11,7 @@ private:
     IInputPredictionStrategyService* _strategyService;
 public:
     HybridGGPOServiceProvider(IGameStateService* gameStateService, IInputPredictionStrategyService* strategyService);
+    IGameStateService* getGameStateService();
+    IInputPredictionStrategyService* getStrategyService();
+
 };
