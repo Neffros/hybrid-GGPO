@@ -1,4 +1,4 @@
-#include "session/HybridP2PSession.h"
+#include "../headers/session/HybridP2PSession.h"
 
 static const int RECOMMENDATION_INTERVAL = 240;
 static const int DEFAULT_DISCONNECT_TIMEOUT = 5000;
@@ -11,7 +11,7 @@ HybridP2PSession::HybridP2PSession(GGPOSessionCallbacks* cb,
     uint16 localport,
     int num_players,
     int input_size,
-    IInputPredictionStrategy* inputPredictionStrategy
+    IInputPredictionStrategyService* inputPredictionStrategy
 ) :
     _num_players(num_players),
     _input_size(input_size),

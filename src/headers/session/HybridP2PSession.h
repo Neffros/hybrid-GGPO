@@ -7,7 +7,7 @@
 #include "timesync.h"
 #include "network/udp_proto.h"
 
-#include "../synchronisation/SyncWithPredictionStrategy.h"
+#include "../synchronisation/HybridSync.h"
 
 namespace HybridGGPO
 {
@@ -23,7 +23,7 @@ namespace HybridGGPO
 			uint16 localport,
 			int num_players,
 			int input_size,
-			IInputPredictionStrategy* inputPredictionStrategy
+			IInputPredictionStrategyService* inputPredictionStrategyService
 		);
 		virtual ~HybridP2PSession();
 

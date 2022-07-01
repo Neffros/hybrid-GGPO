@@ -1,8 +1,8 @@
-#include "../headers/synchronisation/SyncWithPredictionStrategy.h"
+#include "../headers/synchronisation/HybridSync.h"
 
 using namespace HybridGGPO;
 
-SyncWithPredictionStrategy::SyncWithPredictionStrategy(UdpMsg::connect_status* connect_status) :
+HybridSync::HybridSync(UdpMsg::connect_status* connect_status) :
     _local_connect_status(connect_status),
     _input_queues(NULL)
 {
@@ -12,7 +12,7 @@ SyncWithPredictionStrategy::SyncWithPredictionStrategy(UdpMsg::connect_status* c
     memset(&_savedstate, 0, sizeof(_savedstate));
 }
 
-SyncWithPredictionStrategy::~SyncWithPredictionStrategy()
+HybridSync::~HybridSync()
 {
     /*
      * Delete frames manually here rather than in a destructor of the SavedFrame
@@ -26,9 +26,9 @@ SyncWithPredictionStrategy::~SyncWithPredictionStrategy()
 }
 
 void
-SyncWithPredictionStrategy::Init(
-    SyncWithPredictionStrategy::Config& config,
-    IInputPredictionStrategy* inputPredictionStrategy
+HybridSync::Init(
+        HybridSync::Config& config,
+        IInputPredictionStrategyService* inputPredictionStrategy
 )
 {
     _config = config;
@@ -41,16 +41,16 @@ SyncWithPredictionStrategy::Init(
     CreateQueues(config);
 
     if (_inputPredictionStrategy) {
-        // TD: Add onRemoved callback to IInputPredictionStrategy
+        // TD: Add onRemoved callback to IInputPredictionStrategyService
     }
 
     _inputPredictionStrategy = inputPredictionStrategy;
 
-    // TD: Add onInitialized callback to IInputPredictionStrategy
+    // TD: Add onInitialized callback to IInputPredictionStrategyService
 }
 
 void
-SyncWithPredictionStrategy::SetLastConfirmedFrame(int frame)
+HybridSync::SetLastConfirmedFrame(int frame)
 {
     _last_confirmed_frame = frame;
     if (_last_confirmed_frame > 0) {
@@ -61,7 +61,7 @@ SyncWithPredictionStrategy::SetLastConfirmedFrame(int frame)
 }
 
 bool
-SyncWithPredictionStrategy::AddLocalInput(int queue, GameInput& input)
+HybridSync::AddLocalInput(int queue, GameInput& input)
 {
     int frames_behind = _framecount - _last_confirmed_frame;
     if (_framecount >= _max_prediction_frames && frames_behind >= _max_prediction_frames) {
@@ -81,13 +81,13 @@ SyncWithPredictionStrategy::AddLocalInput(int queue, GameInput& input)
 }
 
 void
-SyncWithPredictionStrategy::AddRemoteInput(int queue, GameInput& input)
+HybridSync::AddRemoteInput(int queue, GameInput& input)
 {
     _input_queues[queue].AddInput(input);
 }
 
 int
-SyncWithPredictionStrategy::GetConfirmedInputs(void* values, int size, int frame)
+HybridSync::GetConfirmedInputs(void* values, int size, int frame)
 {
     int disconnect_flags = 0;
     char* output = (char*)values;
@@ -110,7 +110,7 @@ SyncWithPredictionStrategy::GetConfirmedInputs(void* values, int size, int frame
 }
 
 int
-SyncWithPredictionStrategy::SynchronizeInputs(void* values, int size)
+HybridSync::SynchronizeInputs(void* values, int size)
 {
     int disconnect_flags = 0;
     char* output = (char*)values;
@@ -140,7 +140,7 @@ SyncWithPredictionStrategy::SynchronizeInputs(void* values, int size)
 }
 
 void
-SyncWithPredictionStrategy::CheckSimulation(int timeout)
+HybridSync::CheckSimulation(int timeout)
 {
     int seek_to;
     if (!CheckSimulationConsistency(&seek_to)) {
@@ -149,14 +149,14 @@ SyncWithPredictionStrategy::CheckSimulation(int timeout)
 }
 
 void
-SyncWithPredictionStrategy::IncrementFrame(void)
+HybridSync::IncrementFrame(void)
 {
     _framecount++;
     SaveCurrentFrame();
 }
 
 void
-SyncWithPredictionStrategy::AdjustSimulation(int seek_to)
+HybridSync::AdjustSimulation(int seek_to)
 {
     int framecount = _framecount;
     int count = _framecount - seek_to;
@@ -186,7 +186,7 @@ SyncWithPredictionStrategy::AdjustSimulation(int seek_to)
 }
 
 void
-SyncWithPredictionStrategy::LoadFrame(int frame)
+HybridSync::LoadFrame(int frame)
 {
     // find the frame in question
     if (frame == _framecount) {
@@ -211,7 +211,7 @@ SyncWithPredictionStrategy::LoadFrame(int frame)
 }
 
 void
-SyncWithPredictionStrategy::SaveCurrentFrame()
+HybridSync::SaveCurrentFrame()
 {
     /*
      * See StateCompress for the real save feature implemented by FinalBurn.
@@ -229,8 +229,8 @@ SyncWithPredictionStrategy::SaveCurrentFrame()
     _savedstate.head = (_savedstate.head + 1) % ARRAY_SIZE(_savedstate.frames);
 }
 
-SyncWithPredictionStrategy::SavedFrame&
-SyncWithPredictionStrategy::GetLastSavedFrame()
+HybridSync::SavedFrame&
+HybridSync::GetLastSavedFrame()
 {
     int i = _savedstate.head - 1;
     if (i < 0) {
@@ -241,7 +241,7 @@ SyncWithPredictionStrategy::GetLastSavedFrame()
 
 
 int
-SyncWithPredictionStrategy::FindSavedFrameIndex(int frame)
+HybridSync::FindSavedFrameIndex(int frame)
 {
     int i, count = ARRAY_SIZE(_savedstate.frames);
     for (i = 0; i < count; i++) {
@@ -257,10 +257,10 @@ SyncWithPredictionStrategy::FindSavedFrameIndex(int frame)
 
 
 bool
-SyncWithPredictionStrategy::CreateQueues(Config& config)
+HybridSync::CreateQueues(Config& config)
 {
     delete[] _input_queues;
-    _input_queues = new InputQueue[_config.num_players];
+    _input_queues = new HybridInputQueue[_config.num_players];
 
     for (int i = 0; i < _config.num_players; i++) {
         _input_queues[i].Init(i, _config.input_size);
@@ -269,7 +269,7 @@ SyncWithPredictionStrategy::CreateQueues(Config& config)
 }
 
 bool
-SyncWithPredictionStrategy::CheckSimulationConsistency(int* seekTo)
+HybridSync::CheckSimulationConsistency(int* seekTo)
 {
     int first_incorrect = GameInput::NullFrame;
     for (int i = 0; i < _config.num_players; i++) {
@@ -290,14 +290,14 @@ SyncWithPredictionStrategy::CheckSimulationConsistency(int* seekTo)
 }
 
 void
-SyncWithPredictionStrategy::SetFrameDelay(int queue, int delay)
+HybridSync::SetFrameDelay(int queue, int delay)
 {
     _input_queues[queue].SetFrameDelay(delay);
 }
 
 
 void
-SyncWithPredictionStrategy::ResetPrediction(int frameNumber)
+HybridSync::ResetPrediction(int frameNumber)
 {
     for (int i = 0; i < _config.num_players; i++) {
         _input_queues[i].ResetPrediction(frameNumber);
@@ -306,7 +306,7 @@ SyncWithPredictionStrategy::ResetPrediction(int frameNumber)
 
 
 bool
-SyncWithPredictionStrategy::GetEvent(Event& e)
+HybridSync::GetEvent(Event& e)
 {
     if (_event_queue.size()) {
         e = _event_queue.front();
