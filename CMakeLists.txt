@@ -13,7 +13,16 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
                 RESULT_VARIABLE GIT_SUBMOD_RESULT)
 
         #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
-        add_library(hybrid_ggpo "src/hybrid_ggpo.cpp" "headers/hybrid_ggpo.h" headers/strategy/IInputPredictionStrategy.h headers/strategy/AHybridInputPredictionStrategy.h "headers/strategy/ARandomInputPredictionStrategy .h" headers/Samples/DSSample.h src/Samples/DSSample.cpp headers/Samples/FSSample.h src/Samples/FSSample.cpp)
+        add_library(hybrid_ggpo "src/main.cpp" "hybrid_ggpo.h"
+                src/headers/samples/DSSample.h src/Samples/DSSample.cpp
+                src/headers/samples/FSSample.h src/Samples/FSSample.cpp
+                src/headers/mlp/MlpWrapper.h src/mlp/MlpWrapper.cpp
+                src/headers/strategy/IInputPredictionStrategyService.h
+                src/headers/strategy/ARandomInputPredictionStrategyService.h
+                src/headers/strategy/AHybridInputPredictionStrategyService.h
+                src/headers/GameStateService.h src/GameStateService.cpp
+                src/headers/HybridGGPOServiceProvider.h src/HybridGGPOServiceProvider.cpp
+                src/headers/synchronisation/HybridSync.h src/synchronisation/HybridSync.cpp src/headers/samples/DatasetSampleMapper.h)
 
         #add_executable(hybrid_ggpo "src/hybrid_ggpo.cpp" "headers/hybrid_ggpo.h" headers/strategy/IInputPredictionStrategy.h headers/strategy/AHybridInputPredictionStrategy.h "headers/strategy/ARandomInputPredictionStrategy .h")
         target_link_libraries(hybrid_ggpo Atlus)
@@ -29,8 +38,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
         add_library(HybridGGPO
             "src/main.cpp"
             "src/session/HybridP2PSession.cpp"
-            "src/synchronisation/SyncWithPredictionStrategy.cpp"
-        )
+                )
 
         target_link_libraries(HybridGGPO Atlus)
         target_link_libraries(HybridGGPO GGPO)
