@@ -1,4 +1,4 @@
-#include "headers/HybridGGPOServiceProvider.h"
+#include "headers/service/HybridGGPOServiceProvider.h"
 
 HybridGGPOServiceProvider::HybridGGPOServiceProvider(IGameStateService *gameStateService,
                                                      IInputPredictionStrategyService *strategyService) : _gameStateService(gameStateService), _strategyService(strategyService) {}
