@@ -20,7 +20,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
                 src/headers/strategy/IInputPredictionStrategyService.h
                 src/headers/strategy/ARandomInputPredictionStrategyService.h
                 src/headers/strategy/AHybridInputPredictionStrategyService.h
-                src/headers/GameStateService.h src/GameStateService.cpp
+                src/headers/IGameStateService.h src/IGameStateService.cpp
                 src/headers/HybridGGPOServiceProvider.h src/HybridGGPOServiceProvider.cpp
                 src/headers/synchronisation/HybridSync.h src/synchronisation/HybridSync.cpp src/headers/samples/DatasetSampleMapper.h)
 
