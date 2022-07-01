@@ -50,14 +50,14 @@ void DSSample::reinitData() {
 
 template<class T>
 void DSSample::baseAdd(const T &value) {
-    this->_data.emplace_back((double) value);
+    this->_data.push_back((double) value);
 }
 
 template<class T>
 void DSSample::baseAddCategorical(const T &value, const std::vector<T> &possibleValues) {
     for(auto it = possibleValues.begin(); it != possibleValues.end(); ++it)
     {
-        this->_data.emplace_back(value == *it? (double)1 : (double)2);
+        this->_data.push_back(value == *it? 0 : 1);
     }
 }
 
@@ -65,7 +65,7 @@ template<class T>
 void DSSample::baseAddCategorical(const T &value, const T *possibleValues, const size_t size) {
     for(auto i = 0; i < size; ++i)
     {
-        this->_data.emplace_back(value == possibleValues[i]? (double)1 : (double)2);
+        this->_data.push_back(value == possibleValues[i]? 0 : 1);
     }
 }
 
@@ -93,7 +93,7 @@ void DSSample::addCategorical(const char &value, const char *possibleValues, con
     this->baseAddCategorical(value, possibleValues, size);
 }
 
-void DSSample::getData(double (&array)[]) const {
+void DSSample::getData(double* array) const {
     std::copy(this->_data.begin(), this->_data.end(), array);
 }
 

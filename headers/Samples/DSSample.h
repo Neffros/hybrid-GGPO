@@ -42,5 +42,5 @@ public:
 
     void reinitData();
 
-    void getData(double (&array)[]) const;
+    void getData(double* array) const;
 };
