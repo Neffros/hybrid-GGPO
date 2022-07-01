@@ -15,7 +15,7 @@ template<class T>
 void FSSample::baseAddCategorical(const T &value, const std::vector<T> &possibleValues) {
     for(auto it = possibleValues.begin(); it != possibleValues.end(); ++it)
     {
-        this->_data[this->_index] = (value == *it? 0 : 1);
+        this->_data[this->_index] = (value == *it ? 1 : 0);
     }
     this->_index += possibleValues.size();
 }
@@ -24,7 +24,7 @@ template<class T>
 void FSSample::baseAddCategorical(const T &value, const T *possibleValues, const size_t size) {
     for(auto i = 0; i < size; ++i)
     {
-        this->_data[this->_index] = (value == possibleValues[i]? 0 : 1);
+        this->_data[this->_index] = (value == possibleValues[i] ? 1 : 0);
 
     }
     this->_index += size;
