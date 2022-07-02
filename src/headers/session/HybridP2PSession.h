@@ -7,7 +7,8 @@
 #include "timesync.h"
 #include "network/udp_proto.h"
 
-#include "../synchronisation/SyncWithPredictionStrategy.h"
+#include "../synchronisation/HybridSync.h"
+#include "../service/strategy/IInputPredictionStrategyService.h"
 
 namespace HybridGGPO
 {
@@ -23,7 +24,7 @@ namespace HybridGGPO
 			uint16 localport,
 			int num_players,
 			int input_size,
-			IInputPredictionStrategy* inputPredictionStrategy
+			IInputPredictionStrategyService* inputPredictionStrategy
 		);
 		virtual ~HybridP2PSession();
 
@@ -55,7 +56,7 @@ namespace HybridGGPO
 		int PollNPlayers(int current_frame);
 		void AddRemotePlayer(char* remoteip, uint16 reportport, int queue);
 		GGPOErrorCode AddSpectator(char* remoteip, uint16 reportport);
-		virtual void OnSyncEvent(SyncWithPredictionStrategy::Event& e) { }
+		virtual void OnSyncEvent(HybridSync::Event& e) { }
 		virtual void OnUdpProtocolEvent(UdpProtocol::Event& e, GGPOPlayerHandle handle);
 		virtual void OnUdpProtocolPeerEvent(UdpProtocol::Event& e, int queue);
 		virtual void OnUdpProtocolSpectatorEvent(UdpProtocol::Event& e, int queue);
@@ -63,7 +64,7 @@ namespace HybridGGPO
 	protected:
 		GGPOSessionCallbacks		_callbacks;
 		Poll						_poll;
-		SyncWithPredictionStrategy  _sync;
+		HybridSync                  _sync;
 		Udp							_udp;
 		UdpProtocol*				_endpoints;
 		UdpProtocol					_spectators[GGPO_MAX_SPECTATORS];
