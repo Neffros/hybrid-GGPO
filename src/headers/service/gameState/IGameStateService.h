@@ -5,5 +5,5 @@
 // IGameStateService is only called by a final game State, not impacted by a prediction.
 class IGameStateService
 {
-
+    virtual double* ConvertGameStateToDataset(char* gameState) = 0;
 };
