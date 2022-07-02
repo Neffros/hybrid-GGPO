@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class FSSample
+class DatasetFSSampleMapper
 {
 private:
     double* _data;
@@ -20,7 +20,7 @@ private:
 
 public:
     template<class T>
-    explicit FSSample(T size);
+    explicit DatasetFSSampleMapper(T size);
 
     void add(const int& value);
     void add(const float& value);
@@ -49,4 +49,6 @@ public:
     void reinitData();
 
     void getData(double* array) const;
+
+    DatasetFSSampleMapper(DatasetFSSampleMapper *pMapper);
 };

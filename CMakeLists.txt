@@ -14,15 +14,15 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 
         #add_library (hybrid_ggpo "hybrid_ggpo.cpp" "hybrid_ggpo.h")
         add_library(hybrid_ggpo "src/main.cpp" "hybrid_ggpo.h"
-                src/headers/samples/DSSample.h src/Samples/DSSample.cpp
-                src/headers/samples/FSSample.h src/Samples/FSSample.cpp
+                src/headers/samples/DatasetDSSampleMapper.h src/samples/DatasetDSSampleMapper.cpp
+                src/headers/samples/DatasetFSSampleMapper.h src/samples/DatasetFSSampleMapper.cpp
                 src/headers/mlp/MlpWrapper.h src/mlp/MlpWrapper.cpp
-                src/headers/strategy/IInputPredictionStrategyService.h
-                src/headers/strategy/ARandomInputPredictionStrategyService.h
-                src/headers/strategy/AHybridInputPredictionStrategyService.h
-                src/headers/IGameStateService.h src/IGameStateService.cpp
-                src/headers/HybridGGPOServiceProvider.h src/HybridGGPOServiceProvider.cpp
-                src/headers/synchronisation/HybridSync.h src/synchronisation/HybridSync.cpp src/headers/samples/DatasetSampleMapper.h)
+                src/headers/service/strategy/IInputPredictionStrategyService.h
+                src/headers/service/strategy/ARandomInputPredictionStrategyService.h
+                src/headers/service/strategy/AHybridInputPredictionStrategyService.h
+                src/headers/service/gameState/IGameStateService.h src/service/gameState/IGameStateService.cpp
+                src/headers/service/HybridGGPOServiceProvider.h src/HybridGGPOServiceProvider.cpp
+                src/headers/synchronisation/HybridSync.h src/synchronisation/HybridSync.cpp src/headers/service/gameState/AGameStateFSSService.h src/headers/service/gameState/AGameStateDSSService.h src/service/gameState/AGameStateDSSService.cpp src/service/gameState/AGameStateFSSService.cpp src/service/strategy/IInputPredictionStrategyService.cpp)
 
         #add_executable(hybrid_ggpo "src/hybrid_ggpo.cpp" "headers/hybrid_ggpo.h" headers/strategy/IInputPredictionStrategy.h headers/strategy/AHybridInputPredictionStrategy.h "headers/strategy/ARandomInputPredictionStrategy .h")
         target_link_libraries(hybrid_ggpo Atlus)

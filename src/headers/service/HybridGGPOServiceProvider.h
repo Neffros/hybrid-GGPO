@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IGameStateService.h"
+#include "gameState/IGameStateService.h"
 #include "strategy/IInputPredictionStrategyService.h"
 
 //HybridGGPOServiceProvider exposes the different services of hybrid GGPO.

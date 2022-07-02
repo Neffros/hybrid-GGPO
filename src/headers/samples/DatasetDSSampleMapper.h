@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class DSSample {
+class DatasetDSSampleMapper {
 private:
     std::vector<double> _data;
 
@@ -16,6 +16,7 @@ private:
     void baseAddCategorical(const T& value, const T* possibleValues, size_t size);
 
 public:
+    DatasetDSSampleMapper();
     void add(const int& value);
     void add(const float& value);
     void add(const double& value);
@@ -43,4 +44,6 @@ public:
     void reinitData();
 
     void getData(double* array, size_t& size) const;
+
+    DatasetDSSampleMapper(DatasetDSSampleMapper *pMapper);
 };
