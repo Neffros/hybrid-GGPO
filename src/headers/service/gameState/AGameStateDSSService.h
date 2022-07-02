@@ -8,5 +8,5 @@ private:
     DatasetDSSampleMapper _datasetDSSampleMapper;
 public:
     AGameStateDSSService();
-    double* ConvertGameStateToDataset(char* gameState);
+    double* ConvertGameStateToDataset(char* gameState) override;
 };

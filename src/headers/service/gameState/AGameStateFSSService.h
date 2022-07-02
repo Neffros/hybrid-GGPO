@@ -8,5 +8,5 @@ private:
     DatasetFSSampleMapper _datasetFSSampleMapper;
 public:
     AGameStateFSSService(size_t size);
-    double* ConvertGameStateToDataset(char* gameState);
+    double* ConvertGameStateToDataset(char* gameState) override;
 };
