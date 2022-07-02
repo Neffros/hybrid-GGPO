@@ -7,7 +7,7 @@
 #include "ring_buffer.h"
 #include "network/udp_msg.h"
 
-#include "../strategy/IInputPredictionStrategyService.h"
+#include "../service/strategy/IInputPredictionStrategyService.h"
 
 #define MAX_PREDICTION_FRAMES    20
 
