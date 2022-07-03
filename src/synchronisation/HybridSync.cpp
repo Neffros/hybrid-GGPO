@@ -113,26 +113,18 @@ int
 HybridSync::SynchronizeInputs(void* values, int size)
 {
     int disconnect_flags = 0;
-    char* output = (char*)values;
+    char *output = (char *)values;
 
     ASSERT(size >= _config.num_players * _config.input_size);
-    
+
     memset(output, 0, size);
     for (int i = 0; i < _config.num_players; i++) {
         GameInput input;
         if (_local_connect_status[i].disconnected && _framecount > _local_connect_status[i].last_frame) {
             disconnect_flags |= (1 << i);
             input.erase();
-        }
-        // InputQueue.GetInput(...) returns false when predicting
-        else if (!_input_queues[i].GetInput(_framecount, &input)) {
-            // TODO : Find a better method to retrieve state or let the strategy manage the state indexing
-            SavedFrame* state = _savedstate.frames + FindSavedFrameIndex(_framecount);
-            
-            ASSERT(state->buf && state->cbuf);
-
-            // We use the given input prediction strategy
-            _inputPredictionStrategy->requestPrediction(_framecount, (char const*)state->buf, (void*)input.bits, input.size);
+        } else {
+            _input_queues[i].GetInput(_framecount, &input);
         }
         memcpy(output + (i * _config.input_size), input.bits, _config.input_size);
     }
