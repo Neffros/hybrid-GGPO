@@ -11,6 +11,7 @@ set(HYBRID_GGPO_LIB_INC_NOFILTER
         "../ggpo/src/lib/ggpo/zconf.h"
         "../ggpo/src/lib/ggpo/zlib.h"
         "headers/synchronisation/HybridSync.h"
+        "headers/synchronisation/HybridInputQueue.h"
         )
 
 set(HYBRID_GGPO_LIB_SRC_NOFILTER
@@ -24,6 +25,7 @@ set(HYBRID_GGPO_LIB_SRC_NOFILTER
         "../ggpo/src/lib/ggpo/timesync.cpp"
         "synchronisation/HybridSync.cpp"
         "main.cpp"
+        "synchronisation/HybridInputQueue.cpp"
         )
 
 if(UNIX)

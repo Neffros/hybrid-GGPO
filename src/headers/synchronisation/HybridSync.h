@@ -6,6 +6,7 @@
 #include "input_queue.h"
 #include "ring_buffer.h"
 #include "network/udp_msg.h"
+#include "HybridInputQueue.h"
 
 #include "../service/strategy/IInputPredictionStrategyService.h"
 
@@ -15,10 +16,10 @@ class SyncTestBackend;
 
 namespace HybridGGPO
 {
-	/*
-	 * HybridGGPO authors' note:
-	 * Literally the Sync class from GGPO using prediction strategy when a player's input queue is predicting
-	 */
+    /// <summary>
+    /// HybridGGPO authors' note:
+    /// Literally the Sync class from GGPO using prediction strategy when a player's input queue is predicting
+    /// </summary>
 	class HybridSync {
 	public:
 		struct Config {
@@ -94,7 +95,7 @@ namespace HybridGGPO
 		int            _framecount;
 		int            _max_prediction_frames;
 
-		InputQueue*					_input_queues;
+        HybridInputQueue*					_input_queues;
 		IInputPredictionStrategyService*	_inputPredictionStrategy;
 
 		RingBuffer<Event, 32> _event_queue;

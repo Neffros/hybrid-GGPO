@@ -260,7 +260,7 @@ bool
 HybridSync::CreateQueues(Config& config)
 {
     delete[] _input_queues;
-    _input_queues = new InputQueue[_config.num_players];
+    _input_queues = new HybridInputQueue[_config.num_players];
 
     for (int i = 0; i < _config.num_players; i++) {
         _input_queues[i].Init(i, _config.input_size);
