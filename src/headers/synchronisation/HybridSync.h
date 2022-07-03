@@ -9,7 +9,6 @@
 
 #include "../service/strategy/IInputPredictionStrategyService.h"
 
-#define MAX_PREDICTION_FRAMES    20
 
 class SyncTestBackend;
 
