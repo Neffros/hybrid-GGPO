@@ -9,6 +9,7 @@
 
 #include "../service/strategy/IInputPredictionStrategyService.h"
 
+#define MAX_HYBRID_PREDICTION_FRAMES    20
 
 class SyncTestBackend;
 
@@ -70,7 +71,7 @@ namespace HybridGGPO
 			SavedFrame() : buf(NULL), cbuf(0), frame(-1), checksum(0) { }
 		};
 		struct SavedState {
-			SavedFrame frames[MAX_PREDICTION_FRAMES + 2];
+			SavedFrame frames[MAX_HYBRID_PREDICTION_FRAMES + 2];
 			int head;
 		};
 
