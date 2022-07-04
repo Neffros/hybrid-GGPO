@@ -27,7 +27,7 @@ namespace HybridGGPO
         void ResetPrediction(int frame);
         void DiscardConfirmedFrames(int frame);
         bool GetConfirmedInput(int frame, GameInput* input);
-        bool GetInput(int frame, GameInput* input, void* values, int player, IInputPredictionStrategyService* strategy);
+        bool GetInput(int frame, GameInput* input, void* values, int player, int size, IInputPredictionStrategyService* strategy);
         void AddInput(GameInput& input);
 
     protected:
