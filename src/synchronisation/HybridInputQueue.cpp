@@ -117,7 +117,7 @@ HybridInputQueue::GetConfirmedInput(int requested_frame, GameInput *input)
 }
 
 bool
-HybridInputQueue::GetInput(int requested_frame, GameInput *input)
+HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, int player, IInputPredictionStrategyService* strategy)
 {
     Log("requesting input frame %d.\n", requested_frame);
 
@@ -165,7 +165,15 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input)
         } else {
             Log("basing new prediction frame from previously added frame (queue entry:%d, frame:%d).\n",
                 PREVIOUS_FRAME(_head), _inputs[PREVIOUS_FRAME(_head)].frame);
-            _prediction = _inputs[PREVIOUS_FRAME(_head)];
+            strategy->requestPrediction(requested_frame, NULL, values, _prediction.size);
+            GameInput gameInput;
+            gameInput.frame = requested_frame;
+            gameInput.size = _prediction.size;
+            int index = (int)player;
+            for (int i = 0; i < _prediction.size; i++) {
+                gameInput.bits[(index * _prediction.size) + i] |= ((char *)values)[i];
+            }
+            _prediction = gameInput;
         }
         _prediction.frame++;
     }
