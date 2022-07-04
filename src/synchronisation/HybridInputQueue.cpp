@@ -167,7 +167,7 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
                 PREVIOUS_FRAME(_head), _inputs[PREVIOUS_FRAME(_head)].frame);
             strategy->requestPrediction(requested_frame, NULL, values, _prediction.size);
             GameInput gameInput;
-            gameInput.frame = requested_frame;
+            gameInput.frame = requested_frame-1;
             gameInput.size = _prediction.size;
             int index = (int)player;
             for (int i = 0; i < _prediction.size; i++) {
