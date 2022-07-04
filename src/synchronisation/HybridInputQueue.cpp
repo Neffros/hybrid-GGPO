@@ -143,13 +143,13 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
          */
         int offset = requested_frame - _inputs[_tail].frame;
 
-        /*if (offset < _length) {
+        if (offset < _length) {
             offset = (offset + _tail) % INPUT_QUEUE_LENGTH;
             ASSERT(_inputs[offset].frame == requested_frame);
             *input = _inputs[offset];
             Log("returning confirmed frame number %d.\n", input->frame);
-            return true;
-        }*/
+            //return true;
+        }
 
         /*
          * The requested frame isn't in the queue.  Bummer.  This means we need
@@ -157,9 +157,6 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
          * same thing they did last time.
          */
         if (requested_frame == 0) {
-            GameInput gameInput;
-            gameInput.init(0,(char*)values, size);
-            *input = gameInput;
             Log("basing new prediction frame from nothing, you're client wants frame 0.\n");
             _prediction.erase();
         } else if (_last_added_frame == GameInput::NullFrame) {
