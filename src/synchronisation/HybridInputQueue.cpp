@@ -141,7 +141,6 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
          * If the frame requested is in our range, fetch it out of the queue and
          * return it.
          */
-
         int offset = requested_frame - _inputs[_tail].frame;
 
         if (offset < _length) {
@@ -149,26 +148,8 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
             ASSERT(_inputs[offset].frame == requested_frame);
             *input = _inputs[offset];
             Log("returning confirmed frame number %d.\n", input->frame);
-            strategy->requestPrediction(requested_frame, NULL, values, _prediction.size);
-            GameInput gameInput;
-            gameInput.frame = requested_frame-1;
-            gameInput.size = _prediction.size;
-            int index = (int)player;
-            for (int i = 0; i < _prediction.size; i++) {
-                gameInput.bits[(index * _prediction.size) + i] |= ((char *)values)[i];
-            }
-            _prediction = gameInput;
             return true;
         }
-        strategy->requestPrediction(requested_frame, NULL, values, _prediction.size);
-        GameInput gameInput;
-        gameInput.frame = requested_frame-1;
-        gameInput.size = _prediction.size;
-        int index = (int)player;
-        for (int i = 0; i < _prediction.size; i++) {
-            gameInput.bits[(index * _prediction.size) + i] |= ((char *)values)[i];
-        }
-        _prediction = gameInput;
 
         /*
          * The requested frame isn't in the queue.  Bummer.  This means we need
@@ -184,7 +165,15 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
         } else {
             Log("basing new prediction frame from previously added frame (queue entry:%d, frame:%d).\n",
                 PREVIOUS_FRAME(_head), _inputs[PREVIOUS_FRAME(_head)].frame);
-
+            strategy->requestPrediction(requested_frame, NULL, values, _prediction.size);
+            GameInput gameInput;
+            gameInput.frame = requested_frame-1;
+            gameInput.size = _prediction.size;
+            int index = (int)player;
+            for (int i = 0; i < _prediction.size; i++) {
+                gameInput.bits[(index * _prediction.size) + i] |= ((char *)values)[i];
+            }
+            _prediction = gameInput;
         }
         _prediction.frame++;
     }
