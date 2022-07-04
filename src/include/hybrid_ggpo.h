@@ -4,6 +4,8 @@
 
 #include "service/strategy/IInputPredictionStrategyService.h"
 #include "service/gameState/IGameStateService.h"
+#include "samples/DatasetDSSampleMapper.h"
+#include "samples/DatasetFSSampleMapper.h"
 
 GGPO_API GGPOErrorCode __cdecl ggpo_start_hybrid_session(
     GGPOSession** session,
