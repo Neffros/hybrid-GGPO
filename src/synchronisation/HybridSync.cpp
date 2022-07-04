@@ -124,9 +124,8 @@ HybridSync::SynchronizeInputs(void* values, int size)
             disconnect_flags |= (1 << i);
             input.erase();
         } else {
-            //_input_queues[i].GetInput(_framecount, &input, values, i, _inputPredictionStrategy);
+            _input_queues[i].GetInput(_framecount, &input, values, i, _inputPredictionStrategy);
         }
-        _input_queues[i].GetInput(_framecount, &input, values, i, _inputPredictionStrategy);
 
         memcpy(output + (i * _config.input_size), input.bits, _config.input_size);
     }
