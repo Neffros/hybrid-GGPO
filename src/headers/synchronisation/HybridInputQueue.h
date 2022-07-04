@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_input.h"
+#include "service/strategy/IInputPredictionStrategyService.h"
 
 #define INPUT_QUEUE_LENGTH    128
 #define DEFAULT_INPUT_SIZE      4
@@ -26,7 +27,7 @@ namespace HybridGGPO
         void ResetPrediction(int frame);
         void DiscardConfirmedFrames(int frame);
         bool GetConfirmedInput(int frame, GameInput* input);
-        bool GetInput(int frame, GameInput* input);
+        bool GetInput(int frame, GameInput* input, void* values, int player, int size, IInputPredictionStrategyService* strategy);
         void AddInput(GameInput& input);
 
     protected:
