@@ -148,7 +148,7 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
             ASSERT(_inputs[offset].frame == requested_frame);
             *input = _inputs[offset];
             Log("returning confirmed frame number %d.\n", input->frame);
-            //return true;
+            return true;
         }
 
         /*
