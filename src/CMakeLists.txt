@@ -2,7 +2,7 @@ include(CMakeSources.cmake)
 
 add_library(HybridGGPO
         ${HYBRID_GGPO_LIB_SRC}
-        headers/aclass.h aClass.cpp)
+        )
 
 add_common_flags(HybridGGPO)
 
