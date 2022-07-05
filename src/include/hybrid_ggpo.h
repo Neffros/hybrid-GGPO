@@ -6,6 +6,7 @@
 #include "service/gameState/IGameStateService.h"
 #include "samples/DatasetDSSampleMapper.h"
 #include "samples/DatasetFSSampleMapper.h"
+#include "headers/aclass.h"
 
 GGPO_API GGPOErrorCode __cdecl ggpo_start_hybrid_session(
     GGPOSession** session,
