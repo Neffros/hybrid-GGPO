@@ -9,7 +9,8 @@
 #include "aclass.h"
 
 
-aClass testClass;
+aClass* testClass;
+
 
 GGPO_API GGPOErrorCode __cdecl ggpo_start_hybrid_session(
     GGPOSession** session,
