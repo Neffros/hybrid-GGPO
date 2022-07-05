@@ -12,6 +12,7 @@ set(HYBRID_GGPO_LIB_INC_NOFILTER
         "../ggpo/src/lib/ggpo/zlib.h"
         "headers/synchronisation/HybridSync.h"
         "headers/synchronisation/HybridInputQueue.h"
+        "headers/samples/DatasetDSSampleMapper.h"
         )
 
 set(HYBRID_GGPO_LIB_SRC_NOFILTER
@@ -26,6 +27,7 @@ set(HYBRID_GGPO_LIB_SRC_NOFILTER
         "synchronisation/HybridSync.cpp"
         "main.cpp"
         "synchronisation/HybridInputQueue.cpp"
+        "samples/DatasetDSSampleMapper.cpp"
         )
 
 if(UNIX)
