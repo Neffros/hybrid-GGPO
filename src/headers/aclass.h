@@ -1,12 +1,8 @@
 #pragma once
 
 class aClass{
-
 private:
-    int a = 0;
-    int b = 0;
+    int a;
 public:
     aClass();
-    int testMethod();
-
 };
