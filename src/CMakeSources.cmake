@@ -27,8 +27,7 @@ set(HYBRID_GGPO_LIB_SRC_NOFILTER
         "synchronisation/HybridSync.cpp"
         "main.cpp"
         "synchronisation/HybridInputQueue.cpp"
-        "headers/aclass.cpp"
-
+        "aclass.cpp"
         )
 
 if(UNIX)
