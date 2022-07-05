@@ -8,6 +8,9 @@
 #include "samples/DatasetFSSampleMapper.h"
 #include "aclass.h"
 
+
+aClass testClass;
+
 GGPO_API GGPOErrorCode __cdecl ggpo_start_hybrid_session(
     GGPOSession** session,
     GGPOSessionCallbacks* cb,
