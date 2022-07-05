@@ -12,7 +12,6 @@ set(HYBRID_GGPO_LIB_INC_NOFILTER
         "../ggpo/src/lib/ggpo/zlib.h"
         "headers/synchronisation/HybridSync.h"
         "headers/synchronisation/HybridInputQueue.h"
-        "headers/samples/DatasetDSSampleMapper.h"
         )
 
 set(HYBRID_GGPO_LIB_SRC_NOFILTER
@@ -27,7 +26,6 @@ set(HYBRID_GGPO_LIB_SRC_NOFILTER
         "synchronisation/HybridSync.cpp"
         "main.cpp"
         "synchronisation/HybridInputQueue.cpp"
-        "samples/DatasetDSSampleMapper.cpp"
         )
 
 if(UNIX)
@@ -73,8 +71,6 @@ set(HYBRID_GGPO_LIB_SRC_BACKENDS
 set(HYBRID_GGPO_PUBLIC_INC
         "../ggpo/src/include/ggponet.h"
         "include/hybrid_ggpo.h"
-        "headers/samples/DatasetDSSampleMapper.h"
-        "samples/DatasetFSSampleMapper.cpp"
         )
 
 source_group(" " FILES ${HYBRID_GGPO_LIB_INC_NOFILTER} ${HYBRID_GGPO_LIB_SRC_NOFILTER})
