@@ -5,4 +5,5 @@ private:
     int a;
 public:
     aClass();
+    int doSomething();
 };
