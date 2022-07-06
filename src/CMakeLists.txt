@@ -11,7 +11,7 @@ target_include_directories(HybridGGPO PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/headers>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ggpo/src/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../ggpo/src/lib/ggpo>
-        )
+)
 
 if(WIN32)
     target_compile_options(HybridGGPO PRIVATE "/W4" "/WX")

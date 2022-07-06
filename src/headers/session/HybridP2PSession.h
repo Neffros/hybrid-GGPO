@@ -8,23 +8,24 @@
 #include "network/udp_proto.h"
 
 #include "../synchronisation/HybridSync.h"
-#include "../service/strategy/IInputPredictionStrategyService.h"
+#include <service/HybridGGPOServiceProvider.h>
 
 namespace HybridGGPO
 {
 	/*
 	 * HybridGGPO authors' note :
-	 * Literally the Peer2PeerBackend class from GGPO using a SyncWithPredictionStrategy instead of a Sync instance for simulation synchronisation
+	 * Literally the Peer2PeerBackend class from GGPO using a HybridSync instead of a Sync instance for simulation synchronisation
+	 * and receiving HybridGGPO's service provider at construction
 	 */
 	class HybridP2PSession : public IQuarkBackend, IPollSink, Udp::Callbacks {
 	public:
 		HybridP2PSession(
 			GGPOSessionCallbacks* cb,
+			HybridGGPOServiceProvider* serviceProvider,
 			const char* gamename,
 			uint16 localport,
 			int num_players,
-			int input_size,
-			IInputPredictionStrategyService* inputPredictionStrategy
+			int input_size
 		);
 		virtual ~HybridP2PSession();
 

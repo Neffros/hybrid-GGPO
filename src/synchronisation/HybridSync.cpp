@@ -26,10 +26,7 @@ HybridSync::~HybridSync()
 }
 
 void
-HybridSync::Init(
-        HybridSync::Config& config,
-        IInputPredictionStrategyService* inputPredictionStrategy
-)
+HybridSync::Init(HybridSync::Config& config)
 {
     _config = config;
     _callbacks = config.callbacks;
@@ -39,14 +36,6 @@ HybridSync::Init(
     _max_prediction_frames = config.num_prediction_frames;
 
     CreateQueues(config);
-
-    if (_inputPredictionStrategy) {
-        // TD: Add onRemoved callback to IInputPredictionStrategyService
-    }
-
-    _inputPredictionStrategy = inputPredictionStrategy;
-
-    // TD: Add onInitialized callback to IInputPredictionStrategyService
 }
 
 void
@@ -124,7 +113,7 @@ HybridSync::SynchronizeInputs(void* values, int size)
             disconnect_flags |= (1 << i);
             input.erase();
         } else {
-            _input_queues[i].GetInput(_framecount, &input, values, i, size, _inputPredictionStrategy);
+            _input_queues[i].GetInput(_framecount, &input, values, i, size);
         }
 
         memcpy(output + (i * _config.input_size), input.bits, _config.input_size);
@@ -217,6 +206,7 @@ HybridSync::SaveCurrentFrame()
     }
     state->frame = _framecount;
     _callbacks.save_game_state(&state->buf, &state->cbuf, &state->checksum, state->frame);
+    this->_config.serviceProvider->getGameStateService()->receiveGameState(state->buf, _framecount);
 
     Log("=== Saved frame info %d (size: %d  checksum: %08x).\n", state->frame, state->cbuf, state->checksum);
     _savedstate.head = (_savedstate.head + 1) % ARRAY_SIZE(_savedstate.frames);
@@ -256,7 +246,7 @@ HybridSync::CreateQueues(Config& config)
     _input_queues = new HybridInputQueue[_config.num_players];
 
     for (int i = 0; i < _config.num_players; i++) {
-        _input_queues[i].Init(i, _config.input_size);
+        _input_queues[i].Init(i, _config.input_size, _config.serviceProvider);
     }
     return true;
 }

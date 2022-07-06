@@ -1,10 +1,3 @@
-/* -----------------------------------------------------------------------
- * GGPO.net (http://ggpo.net)  -  Copyright 2009 GroundStorm Studios, LLC.
- *
- * Use of this software is governed by the MIT license that can be found
- * in the LICENSE file.
- */
-
 #include "synchronisation/HybridInputQueue.h"
 
 #include "types.h"
@@ -13,9 +6,9 @@
 
 using namespace HybridGGPO;
 
-HybridInputQueue::HybridInputQueue(int input_size)
+HybridInputQueue::HybridInputQueue()
 {
-    Init(-1, input_size);
+    Init(-1, DEFAULT_INPUT_SIZE, NULL);
 }
 
 HybridInputQueue::~HybridInputQueue()
@@ -23,7 +16,7 @@ HybridInputQueue::~HybridInputQueue()
 }
 
 void
-HybridInputQueue::Init(int id, int input_size)
+HybridInputQueue::Init(int id, int input_size, HybridGGPOServiceProvider* serviceProvider)
 {
     _id = id;
     _head = 0;
@@ -46,6 +39,8 @@ HybridInputQueue::Init(int id, int input_size)
     for (int i = 0; i < ARRAY_SIZE(_inputs); i++) {
         _inputs[i].size = input_size;
     }
+
+    this->_serviceProvider = serviceProvider;
 }
 
 int
@@ -117,7 +112,7 @@ HybridInputQueue::GetConfirmedInput(int requested_frame, GameInput *input)
 }
 
 bool
-HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, int player, int size,  IInputPredictionStrategyService* strategy)
+HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, int player, int size)
 {
     Log("requesting input frame %d.\n", requested_frame);
 
@@ -153,8 +148,7 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
 
         /*
          * The requested frame isn't in the queue.  Bummer.  This means we need
-         * to return a prediction frame.  Predict that the user will do the
-         * same thing they did last time.
+         * to return a prediction frame.
          */
         if (requested_frame == 0) {
             Log("basing new prediction frame from nothing, you're client wants frame 0.\n");
@@ -163,17 +157,9 @@ HybridInputQueue::GetInput(int requested_frame, GameInput *input, void* values, 
             Log("basing new prediction frame from nothing, since we have no frames yet.\n");
             _prediction.erase();
         } else {
-            Log("basing new prediction frame from previously added frame (queue entry:%d, frame:%d).\n",
-                PREVIOUS_FRAME(_head), _inputs[PREVIOUS_FRAME(_head)].frame);
-            strategy->requestPrediction(requested_frame, NULL, values, _prediction.size);
-            GameInput gameInput;
-            gameInput.frame = requested_frame-1;
-            gameInput.size = _prediction.size;
-            int index = (int)player;
-            for (int i = 0; i < _prediction.size; i++) {
-                gameInput.bits[(index * _prediction.size) + i] |= ((char *)values)[i];
-            }
-            _prediction = gameInput;
+            Log("basing new prediction frame on user strategy.\n");
+            // TD: Retrieve clean prediction value
+            this->_serviceProvider->getInputPredictionStrategyService()->predict(requested_frame, player, size);
         }
         _prediction.frame++;
     }

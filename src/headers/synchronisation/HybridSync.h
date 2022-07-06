@@ -8,8 +8,6 @@
 #include "network/udp_msg.h"
 #include "HybridInputQueue.h"
 
-#include "../service/strategy/IInputPredictionStrategyService.h"
-
 #define MAX_HYBRID_PREDICTION_FRAMES    20
 
 class SyncTestBackend;
@@ -18,15 +16,16 @@ namespace HybridGGPO
 {
     /// <summary>
     /// HybridGGPO authors' note:
-    /// Literally the Sync class from GGPO using prediction strategy when a player's input queue is predicting
+    /// Literally the Sync class from GGPO receiving HybridGGPO's service provider at initialization
     /// </summary>
 	class HybridSync {
 	public:
 		struct Config {
-			GGPOSessionCallbacks    callbacks;
-			int                     num_prediction_frames;
-			int                     num_players;
-			int                     input_size;
+			GGPOSessionCallbacks		callbacks;
+			HybridGGPOServiceProvider*	serviceProvider;
+			int							num_prediction_frames;
+			int							num_players;
+			int							input_size;
 		};
 		struct Event {
 			enum {
@@ -43,7 +42,7 @@ namespace HybridGGPO
 		HybridSync(UdpMsg::connect_status* connect_status);
 		virtual ~HybridSync();
 
-		void Init(Config& config, IInputPredictionStrategyService* inputPredictionStrategy);
+		void Init(Config& config);
 
 		void SetLastConfirmedFrame(int frame);
 		void SetFrameDelay(int queue, int delay);
@@ -86,19 +85,18 @@ namespace HybridGGPO
 		void ResetPrediction(int frameNumber);
 
 	protected:
-		GGPOSessionCallbacks _callbacks;
-		SavedState     _savedstate;
-		Config         _config;
+		GGPOSessionCallbacks	_callbacks;
+		SavedState				_savedstate;
+		Config					_config;
 
-		bool           _rollingback;
-		int            _last_confirmed_frame;
-		int            _framecount;
-		int            _max_prediction_frames;
+		bool					_rollingback;
+		int						_last_confirmed_frame;
+		int						_framecount;
+		int						_max_prediction_frames;
 
-        HybridInputQueue*					_input_queues;
-		IInputPredictionStrategyService*	_inputPredictionStrategy;
+        HybridInputQueue*		_input_queues;
 
-		RingBuffer<Event, 32> _event_queue;
-		UdpMsg::connect_status* _local_connect_status;
+		RingBuffer<Event, 32>	_event_queue;
+		UdpMsg::connect_status*	_local_connect_status;
 	};
 }

@@ -6,12 +6,13 @@ static const int DEFAULT_DISCONNECT_NOTIFY_START = 750;
 
 using namespace HybridGGPO;
 
-HybridP2PSession::HybridP2PSession(GGPOSessionCallbacks* cb,
+HybridP2PSession::HybridP2PSession(
+    GGPOSessionCallbacks* cb,
+    HybridGGPOServiceProvider* serviceProvider,
     const char* gamename,
     uint16 localport,
     int num_players,
-    int input_size,
-    IInputPredictionStrategyService* inputPredictionStrategy
+    int input_size
 ) :
     _num_players(num_players),
     _input_size(input_size),
@@ -25,6 +26,8 @@ HybridP2PSession::HybridP2PSession(GGPOSessionCallbacks* cb,
     _synchronizing = true;
     _next_recommended_sleep = 0;
 
+    serviceProvider->init();
+
     /*
      * Initialize the synchronization layer
      */
@@ -32,8 +35,9 @@ HybridP2PSession::HybridP2PSession(GGPOSessionCallbacks* cb,
     config.num_players = num_players;
     config.input_size = input_size;
     config.callbacks = _callbacks;
-    config.num_prediction_frames = MAX_PREDICTION_FRAMES;
-    _sync.Init(config, inputPredictionStrategy);
+    config.serviceProvider = serviceProvider;
+    config.num_prediction_frames = MAX_HYBRID_PREDICTION_FRAMES;
+    _sync.Init(config);
 
     /*
      * Initialize the UDP port
