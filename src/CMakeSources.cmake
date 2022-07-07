@@ -79,14 +79,6 @@ set(HYBRID_GGPO_LIB_SRC_SERVICES
         "service/HybridGGPOServiceProvider.cpp"
 )
 
-set(HYBRID_GGPO_LIB_INC_MACHINE_LEARNING
-        "headers/ml/MLPModelWrapper.h"
-)
-
-set(HYBRID_GGPO_LIB_SRC_MACHINE_LEARNING
-        "ml/MLPModelWrapper.cpp"
-)
-
 set(HYBRID_GGPO_PUBLIC_INC
         "../ggpo/src/include/ggponet.h"
         "include/hybrid_ggpo.h"
