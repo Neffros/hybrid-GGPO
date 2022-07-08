@@ -206,7 +206,9 @@ HybridSync::SaveCurrentFrame()
     }
     state->frame = _framecount;
     _callbacks.save_game_state(&state->buf, &state->cbuf, &state->checksum, state->frame);
-    this->_config.serviceProvider->getGameStateService()->receiveGameState(state->buf, _framecount);
+
+    if (this->_config.serviceProvider->getGameStateService() != NULL)
+        this->_config.serviceProvider->getGameStateService()->receiveGameState(state->buf, _framecount);
 
     Log("=== Saved frame info %d (size: %d  checksum: %08x).\n", state->frame, state->cbuf, state->checksum);
     _savedstate.head = (_savedstate.head + 1) % ARRAY_SIZE(_savedstate.frames);

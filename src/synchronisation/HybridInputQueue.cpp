@@ -143,6 +143,10 @@ HybridInputQueue::GetInput(int requested_frame, GameInput* input, void* values, 
 			offset = (offset + _tail) % INPUT_QUEUE_LENGTH;
 			ASSERT(_inputs[offset].frame == requested_frame);
 			*input = _inputs[offset];
+
+			if (this->_serviceProvider->getInputPredictionStrategyService() != NULL)
+				this->_serviceProvider->getInputPredictionStrategyService()->confirm(requested_frame, input->bits, size, player);
+
 			Log("returning confirmed frame number %d.\n", input->frame);
 			return true;
 		}
@@ -161,7 +165,7 @@ HybridInputQueue::GetInput(int requested_frame, GameInput* input, void* values, 
 	_prediction.erase();
 
 	for (int i = 0; i < size; ++i)
-		_prediction.bits[offset + i] |= bits[offset + i];
+		_prediction.bits[offset + i] = bits[offset + i];
 
 	ASSERT(_prediction.frame >= 0);
 
